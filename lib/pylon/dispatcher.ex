@@ -51,14 +51,17 @@ defmodule Pylon.Dispatcher do
       {:error, %HTTPoison.Error{reason: reason}} ->
         [500, [], reason]
     end
+  rescue
+    _ -> [500, [], ""]
   end
 
   def execute_api(uri, method, body, headers, options) when method == :post or method == :patch or method == :put do
     IO.inspect "OMG ITS A POST OR SOMETHING"
+    IO.inspect [uri, method, body, headers, options]
     apply(HTTPoison, method, [uri, body, headers, options])
   end
 
-  def execute_api(uri, method, body, headers, options) do
+  def execute_api(uri, method, _body, headers, options) do
     apply(HTTPoison, method, [uri, headers, options])
   end
 
