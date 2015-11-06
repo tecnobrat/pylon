@@ -1,0 +1,13 @@
+%{"base64url": {:git, "git://github.com/dvv/base64url.git", "bab9f431693a8888528d5c2db933c6f222c6fd44", [tag: "bab9f431693a8888528d5c2db933c6f222c6fd44"]},
+  "cowboy": {:git, "https://github.com/ninenines/cowboy", "b8e4115eb13488c517d8d8ef33c47d0eaa7838c6", [tag: "1.0.3"]},
+  "cowlib": {:git, "https://github.com/ninenines/cowlib.git", "d544a494af4dbc810fc9c15eaf5cc050cced1501", [ref: "1.0.0"]},
+  "ej": {:git, "git://github.com/seth/ej.git", "0332523799fdbab4b7c8e87074dcf57bb15005a6", [tag: "0332523799fdbab4b7c8e87074dcf57bb15005a6"]},
+  "ejwt": {:git, "https://github.com/kato-im/ejwt", "9e806e815eb49fcaf31e95bd21eba10f6298b73e", []},
+  "eredis": {:hex, :eredis, "1.0.8"},
+  "exredis": {:hex, :exredis, "0.2.2"},
+  "hackney": {:hex, :hackney, "1.3.2"},
+  "httpoison": {:hex, :httpoison, "0.7.4"},
+  "idna": {:hex, :idna, "1.0.2"},
+  "jiffy": {:git, "git://github.com/davisp/jiffy", "d16a4fd968e000b65e4678cccfad68d7a0a8bd1c", [tag: "d16a4fd968e000b65e4678cccfad68d7a0a8bd1c"]},
+  "ranch": {:git, "https://github.com/ninenines/ranch.git", "adf1822defc2b7cfdc7aca112adabfa1d614043c", [ref: "1.0.0"]},
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"}}
