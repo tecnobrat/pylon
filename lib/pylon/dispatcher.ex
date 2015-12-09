@@ -7,6 +7,8 @@ defmodule Pylon.Dispatcher do
     case verify_jwt(req) do
       :invalid ->
         {:ok, _} = :cowboy_req.reply(403, [], '{ error: "Invalid JWT" }', req)
+      :missing ->
+        {:ok, _} = :cowboy_req.reply(401, [], '{ error: "Authorization Required" }', req)
       _ ->
         handle_request(req)
     end
@@ -33,10 +35,18 @@ defmodule Pylon.Dispatcher do
     uri
   end
 
+  def verify_jwt(nil) do
+    :invalid
+  end
+
   def verify_jwt(req) do
     jwt_secret = "secret"
-    {:ok, {_, jwt_value}, _} = :cowboy_req.parse_header("authorization", req)
-    :ejwt.parse_jwt(jwt_value, jwt_secret)
+    case :cowboy_req.parse_header("authorization", req) do
+      {:ok, {_, jwt_value}, _} ->
+        :ejwt.parse_jwt(jwt_value, jwt_secret)
+      _ ->
+        :missing
+    end
   end
 
   def fetch_api(:undefined) do
@@ -49,10 +59,10 @@ defmodule Pylon.Dispatcher do
       {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
         [status_code, [], body]
       {:error, %HTTPoison.Error{reason: reason}} ->
-        [500, [], reason]
+        [502, [], reason]
     end
   rescue
-    _ -> [500, [], ""]
+    _ -> [504, [], '{ error: "Gateway Timeout" }']
   end
 
   def execute_api(uri, method, body, headers, options) when method == :post or method == :patch or method == :put do

@@ -32,7 +32,7 @@ config :pylon, api: "https://docs.articulate.zone/"
 #     import_config "#{Mix.env}.exs"
 
 config :exredis,
-  host: "127.0.0.1",
+  host: "redis",
   port: 6379,
   password: "",
   db: 0,
