@@ -30,11 +30,3 @@ config :pylon, api: "https://docs.articulate.zone/"
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
-
-config :exredis,
-  host: "redis",
-  port: 6379,
-  password: "",
-  db: 0,
-  reconnect: :no_reconnect,
-  max_queue: :infinity

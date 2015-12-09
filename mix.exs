@@ -31,7 +31,8 @@ defmodule Pylon.Mixfile do
     [
       {:cowboy, git: "https://github.com/ninenines/cowboy", tag: "1.0.3"},
       {:httpoison, "~> 0.7.2"},
-      {:exredis, ">= 0.2.2"},
+      {:poolboy, ">= 0.0.0"},
+      {:redix, ">= 0.0.0"},
       {:ejwt, git: "https://github.com/kato-im/ejwt"}
     ]
   end

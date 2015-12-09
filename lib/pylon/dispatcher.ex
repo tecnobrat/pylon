@@ -27,16 +27,14 @@ defmodule Pylon.Dispatcher do
   end
 
   def get_upstream_uri(request_path) do
-    {:ok, redis_client} = Exredis.start_link
-    redis_client |> Exredis.query ["SET", "tecnobrat", "https://www.tecnobrat.com/sitemap.xml"]
-    redis_client |> Exredis.query ["SET", "mumbleboxes", "https://www.mumbleboxes.com/sitemap.xml"]
-    uri = redis_client |> Exredis.query ["GET", request_path]
-    redis_client |> Exredis.stop
+    Pylon.RedixPool.command(~w(SET tecnobrat https://www.google.ca/))
+    Pylon.RedixPool.command(~w(SET mumbleboxes https://www.mumbleboxes.com/sitemap.xml))
+    {:ok, uri} = Pylon.RedixPool.command(~w(GET #{request_path}))
     uri
   end
 
-  def verify_jwt(nil) do
-    :invalid
+  def verify_jwt(_) do
+    :yup
   end
 
   def verify_jwt(req) do
@@ -54,7 +52,6 @@ defmodule Pylon.Dispatcher do
   end
 
   def fetch_api(uri, method, body \\ :undefined, headers \\ [], options \\ []) do
-    IO.inspect("Fetching: " <> uri)
     case execute_api(uri, method, body, headers, options) do
       {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
         [status_code, [], body]
