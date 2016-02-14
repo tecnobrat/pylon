@@ -1,0 +1,13 @@
+app:
+  build: .
+  command: mix run --no-halt
+  ports:
+    - "8080:8080"
+  links:
+    - redis
+  volumes:
+    - '.:/app'
+redis:
+  image: redis
+  expose:
+    - 6379
