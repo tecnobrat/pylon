@@ -1,12 +1,31 @@
 defmodule Pylon do
   use Application
 
+  # See http://elixir-lang.org/docs/stable/elixir/Application.html
+  # for more information on OTP Applications
   def start(_type, _args) do
-    dispatch = :cowboy_router.compile([
-      {:_, [{"/[...]", Pylon.Dispatcher, []}]}
-    ])
-    http_port = Application.fetch_env!(:pylon, :http_port)
-    {:ok, _} = :cowboy.start_http(:http, 1000, [port: http_port], [env: [dispatch: dispatch]])
-    Pylon.DispatcherSupervisor.start_link
+    import Supervisor.Spec, warn: false
+
+    children = [
+      # Start the endpoint when the application starts
+      supervisor(Pylon.Endpoint, []),
+      # Start the Ecto repository
+      supervisor(Pylon.Repo, []),
+      supervisor(Pylon.Dispatcher.Router, []),
+      # Here you could define other workers and supervisors as children
+      # worker(Pylon.Worker, [arg1, arg2, arg3]),
+    ]
+
+    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: Pylon.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+
+  # Tell Phoenix to update the endpoint configuration
+  # whenever the application is updated.
+  def config_change(changed, _new, removed) do
+    Pylon.Endpoint.config_change(changed, removed)
+    :ok
   end
 end

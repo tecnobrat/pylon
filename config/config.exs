@@ -21,11 +21,6 @@ use Mix.Config
 #     config :logger, level: :info
 #
 
-config :pylon,
-  redis_host: "redis",
-  redis_pool_size: 50,
-  http_port: 8080
-
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.
@@ -33,3 +28,10 @@ config :pylon,
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+# Configure phoenix generators
+config :phoenix, :generators,
+  migration: true,
+  binary_id: false
+
+import_config "#{Mix.env}.exs"

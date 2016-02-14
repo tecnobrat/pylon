@@ -1,13 +1,14 @@
 app:
   build: .
-  command: mix run --no-halt
+  command: mix phoenix.server
   ports:
+    - "4000:4000"
     - "8080:8080"
   links:
-    - redis
+    - postgres
   volumes:
     - '.:/app'
-redis:
-  image: redis
+postgres:
+  image: postgres
   expose:
-    - 6379
+    - 5432
