@@ -23,7 +23,7 @@ defmodule Pylon.Dispatcher.Plug.JWT do
 
   def init(opts), do: Keyword.get(opts, :with, :exception)
 
-  def call(conn, mode) do
+  def call(conn, _mode) do
     register_before_send(conn, &verify_request!(&1))
   end
 

@@ -13,7 +13,7 @@ defmodule Pylon.Dispatcher.Router do
   end
 
   match _ do
-    [status_code, headers, body] = Pylon.Dispatcher.Handle.handle_request(conn)
+    [status_code, _headers, body] = Pylon.Dispatcher.Handle.handle_request(conn)
     IO.puts status_code
     IO.puts body
     IO.puts "Finished Proxy"
