@@ -1,7 +1,7 @@
 defmodule Pylon.RedixPool do
   use Supervisor
 
-  @redis_connection_params host: "localhost"
+  @redis_connection_params host: Application.fetch_env!(:pylon, :redis_host)
 
   def start_link do
     Supervisor.start_link(__MODULE__, [])
@@ -11,7 +11,7 @@ defmodule Pylon.RedixPool do
     pool_opts = [
       name: {:local, :redix_poolboy},
       worker_module: Redix,
-      size: 50,
+      size: Application.fetch_env!(:pylon, :redis_pool_size),
       max_overflow: 5,
     ]
 

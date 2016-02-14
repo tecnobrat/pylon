@@ -21,7 +21,10 @@ use Mix.Config
 #     config :logger, level: :info
 #
 
-config :pylon, api: "https://docs.articulate.zone/"
+config :pylon,
+  redis_host: "redis",
+  redis_pool_size: 50,
+  http_port: 8080
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment

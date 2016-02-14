@@ -15,6 +15,11 @@ defmodule Pylon.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     [ mod: { Pylon, [] },
+      env: [
+        redis_host: "localhost",
+        redis_pool_size: 50,
+        http_port: 8080
+      ],
       applications: [:cowboy, :httpoison, :crypto] ]
   end
 
